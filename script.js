@@ -20,9 +20,9 @@
       };
       intro.addEventListener('click', () => { intro.classList.add('is-skipped'); setTimeout(finish, 400); });
       intro.addEventListener('animationend', event => { if (event.target === intro) finish(); });
-      setTimeout(finish, 4200);
+      setTimeout(finish, 4800);
     }
-  } catch (error) { /* CSS だけで3.4秒後に消える */ }
+  } catch (error) { /* CSS だけで4秒後に消える */ }
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const onMediaChange = (query, handler) => {
     if (query.addEventListener) query.addEventListener('change', handler);

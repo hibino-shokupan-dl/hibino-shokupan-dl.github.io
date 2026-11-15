@@ -46,11 +46,11 @@ ul { padding: 0; list-style: none; }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
 /* ---- 始まりの演出：生成りの地に「&.&」をペンで書き、書き終わったらページへ（2026-11-15 本人） ----
-   JS が無くても、3.4秒で消える（消え方も CSS だけで決めている） */
+   全体で4秒（2026-11-15 本人「4秒にして」）。JS が無くても4秒で消える（消え方も CSS だけで決めている） */
 .intro { display: none; }
 .has-intro .intro {
   display: grid; place-items: center; position: fixed; inset: 0; z-index: 200; background: var(--kiji); cursor: pointer;
-  animation: intro-out .7s ease 2.7s forwards;
+  animation: intro-out .8s ease 3.2s forwards;
 }
 .intro__art { position: relative; display: grid; place-items: center; }
 /* 「&.&」を書いている間に、後ろからロゴの食パンの型の絵がうっすら浮かび上がり、書き終える頃にはある程度見えている */
@@ -58,18 +58,18 @@ ul { padding: 0; list-style: none; }
   position: absolute; left: 50%; top: 50%; width: min(78vw, 470px); aspect-ratio: 476 / 519;
   background: url(assets/intro-pans.webp) center / contain no-repeat;
   opacity: 0; transform: translate(-50%, -50%) scale(1.06); filter: blur(3px);
-  animation: intro-pans 2.2s cubic-bezier(.45, 0, .4, 1) .15s forwards; pointer-events: none;
+  animation: intro-pans 2.6s cubic-bezier(.45, 0, .4, 1) .2s forwards; pointer-events: none;
 }
 @keyframes intro-pans { to { opacity: .17; transform: translate(-50%, -50%) scale(1); filter: blur(0); } }
 .intro__mark { position: relative; z-index: 1; width: min(62vw, 380px); height: auto; overflow: visible; }
 .intro__glyph {
   fill: var(--ink); fill-opacity: 0; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round;
   stroke-dasharray: var(--len, 6000); stroke-dashoffset: var(--len, 6000);
-  animation: intro-draw var(--dur) cubic-bezier(.5, .1, .3, 1) var(--delay) forwards, intro-fill .6s ease 1.9s forwards;
+  animation: intro-draw var(--dur) cubic-bezier(.5, .1, .3, 1) var(--delay) forwards, intro-fill .7s ease 2.25s forwards;
 }
-.intro__glyph:nth-child(1) { --delay: .2s; --dur: 1s; }
-.intro__glyph:nth-child(2) { --delay: 1.05s; --dur: .25s; }
-.intro__glyph:nth-child(3) { --delay: 1.2s; --dur: 1s; }
+.intro__glyph:nth-child(1) { --delay: .25s; --dur: 1.2s; }
+.intro__glyph:nth-child(2) { --delay: 1.25s; --dur: .3s; }
+.intro__glyph:nth-child(3) { --delay: 1.4s; --dur: 1.2s; }
 .has-intro .intro.is-skipped { animation: intro-out .35s ease forwards; }
 @keyframes intro-draw { to { stroke-dashoffset: 0; } }
 @keyframes intro-fill { to { fill-opacity: 1; } }
