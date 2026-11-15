@@ -3,6 +3,26 @@
   // JS は「足すだけ」。最初の画面のスライドと、Instagram の流れる列だけを動かす。
   // JS が無い時・止まった時は、1枚目の写真と、横にずらせる投稿の列のまま。
   document.documentElement.classList.add('js');
+
+  // ---- 始まりの演出（「&.&」をペンで書く）。線の長さを測って書く速さをそろえ、終わったら外す。タップで飛ばせる ----
+  try {
+    const intro = document.querySelector('.intro');
+    if (intro && document.documentElement.classList.contains('has-intro')) {
+      Array.prototype.forEach.call(intro.querySelectorAll('path'), path => {
+        path.style.setProperty('--len', path.getTotalLength().toFixed(1));
+      });
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        document.documentElement.classList.remove('has-intro');
+        if (intro.parentNode) intro.parentNode.removeChild(intro);
+      };
+      intro.addEventListener('click', () => { intro.classList.add('is-skipped'); setTimeout(finish, 400); });
+      intro.addEventListener('animationend', event => { if (event.target === intro) finish(); });
+      setTimeout(finish, 4200);
+    }
+  } catch (error) { /* CSS だけで3.4秒後に消える */ }
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const onMediaChange = (query, handler) => {
     if (query.addEventListener) query.addEventListener('change', handler);
