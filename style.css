@@ -1,0 +1,353 @@
+/* &.&～日々の食パン～ 試作 v2（2026-11-15 作り直し）
+   地は生成りと白、文字と線は焦げ茶の1色。果実の色はジャムの名前の横の小さな丸だけ。
+   書体は明朝（Shippori Mincho）と欧文のセリフ（Cormorant Garamond）の2つ。角は丸くしない。 */
+:root {
+  --kiji: #F7F3EC;
+  --white: #FFFFFF;
+  --band: #EEE8DF;
+  --ink: #3B2A1F;
+  --ink-soft: #6B5A4D;
+  --line: #D8CEC1;
+  --strawberry: #C7313B;
+  --blueberry: #46335F;
+  --kinkan: #E2802A;
+  --hyuganatsu: #E2BE2E;
+  --mikan: #F0A23C;
+  --mincho: "Shippori Mincho", "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+  --latin: "Cormorant Garamond", "Shippori Mincho", serif;
+  --gutter: 20px;
+  --header-h: 100px;
+  --section-y: 56px;
+}
+@media (min-width: 600px) { :root { --gutter: 32px; --section-y: 80px; } }
+@media (min-width: 900px) { :root { --gutter: 48px; --header-h: 84px; --section-y: 104px; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+body {
+  margin: 0; background: var(--kiji); color: var(--ink);
+  font-family: var(--mincho); font-size: 16px; line-height: 2; letter-spacing: .05em;
+  overflow-x: hidden; padding-bottom: 56px;
+}
+@media (min-width: 900px) { body { padding-bottom: 0; } }
+img { display: block; max-width: 100%; height: auto; }
+figure { margin: 0; }
+a { color: inherit; }
+h1, h2, h3, p, ul, dl, dd { margin: 0; }
+ul { padding: 0; list-style: none; }
+.latin { font-family: var(--latin); letter-spacing: .08em; font-variant-numeric: lining-nums tabular-nums; }
+.phrase { display: inline-block; }
+.note { font-size: 14px; line-height: 1.8; color: var(--ink-soft); }
+.container { width: min(1120px, calc(100% - var(--gutter) * 2)); margin-inline: auto; }
+.section { padding-block: var(--section-y); }
+.section--band { background: var(--band); }
+.section--white { background: var(--white); }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+/* ---- 見出し：小さな英字＋線＋明朝 ---- */
+.heading { margin-bottom: 32px; }
+.heading__en {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 14px;
+  font-size: 15px; line-height: 1.4; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft);
+}
+.heading__en::after { content: ""; width: 48px; height: 1px; background: currentColor; }
+h2 { font-size: clamp(24px, 2.3vw, 31px); font-weight: 500; line-height: 1.7; letter-spacing: .14em; }
+h3 { font-size: 21px; font-weight: 500; line-height: 1.7; letter-spacing: .12em; }
+.body-copy { font-size: 16px; line-height: 2.1; text-wrap: pretty; }
+.body-copy + .body-copy { margin-top: 1.4em; }
+
+/* ---- ボタン：細い枠＋明朝＋線の矢印 ---- */
+/* 線の矢印：細い線と、先の上だけの短い線（2026-11-15 本人「元々の矢印のほうがいい。下の線がないやつ」。元の形を、線の端にきちんとつながるように描いた） */
+.arrow {
+  display: inline-block; flex: none; width: 30px; height: 8px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 8'%3E%3Cpath d='M0 7.2H29.2M23.4 2.2l5.8 5' fill='none' stroke='%23000' stroke-width='1.2'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 8'%3E%3Cpath d='M0 7.2H29.2M23.4 2.2l5.8 5' fill='none' stroke='%23000' stroke-width='1.2'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  transition: transform .25s;
+}
+a:hover .arrow { transform: translateX(4px); }
+.button {
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 24px;
+  min-width: 240px; min-height: 56px; padding: 0 24px 0 28px;
+  border: 1px solid var(--ink); color: var(--ink); background: transparent;
+  font-size: 16px; letter-spacing: .14em; text-decoration: none;
+  transition: background-color .25s, color .25s;
+}
+.button:hover { background: var(--ink); color: var(--kiji); }
+.button--solid { background: var(--ink); color: var(--kiji); }
+.button--solid:hover { background: transparent; color: var(--ink); }
+.more-link {
+  display: inline-flex; align-items: center; gap: 20px; min-height: 44px; margin-top: 28px;
+  padding-bottom: 4px; border-bottom: 1px solid var(--line); text-decoration: none; letter-spacing: .14em;
+}
+.more-link:hover { border-bottom-color: var(--ink); }
+
+/* ---- 上の帯 ---- */
+.site-header { position: sticky; top: 0; z-index: 20; background: var(--kiji); border-bottom: 1px solid var(--line); }
+.site-header__bar {
+  display: grid; grid-template-columns: 1fr auto auto; grid-template-areas: "brand ig tel" "nav nav nav";
+  align-items: center; padding-left: var(--gutter);
+}
+.brand { grid-area: brand; display: flex; align-items: center; gap: 10px; min-height: 56px; text-decoration: none; }
+.brand img { width: 34px; height: auto; }
+.brand__name { font-size: 16px; font-weight: 500; letter-spacing: .04em; white-space: nowrap; }
+.main-nav { grid-area: nav; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); margin-left: calc(var(--gutter) * -1); }
+.main-nav a { display: flex; align-items: center; justify-content: center; min-height: 44px; font-size: 14px; letter-spacing: .08em; text-decoration: none; white-space: nowrap; }
+.main-nav__wide { display: none !important; }
+.header-tel {
+  grid-area: tel; display: flex; align-items: center; justify-content: center; align-self: stretch;
+  min-width: 56px; padding: 0 10px; background: var(--ink); color: var(--kiji); text-decoration: none;
+}
+/* 電話の隣に Instagram の印（2026-11-15 本人） */
+.header-ig { grid-area: ig; display: grid; place-items: center; align-self: stretch; width: 48px; color: var(--ink); border-left: 1px solid var(--line); }
+.header-ig:hover { background: var(--band); }
+@media (max-width: 359px) { .brand__name { display: none; } }
+.header-tel__label { font-size: 16px; letter-spacing: .2em; }
+.header-tel__number, .header-tel__hours { display: none; }
+@media (min-width: 900px) {
+  .site-header__bar { grid-template-columns: auto 1fr auto auto; grid-template-areas: "brand nav ig tel"; min-height: var(--header-h); }
+  .header-ig { width: 72px; }
+  .header-ig svg { width: 24px; height: 24px; }
+  .brand img { width: 42px; }
+  .brand__name { font-size: 16px; letter-spacing: .1em; }
+  .main-nav { display: flex; justify-content: center; gap: clamp(16px, 2.2vw, 36px); border-top: 0; margin: 0; padding-inline: 24px; }
+  .main-nav a { font-size: 15px; letter-spacing: .14em; position: relative; }
+  .main-nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 10px; height: 1px; background: currentColor; transition: right .3s; }
+  .main-nav a:hover::after { right: 0; }
+  .header-tel { flex-direction: column; align-items: flex-start; gap: 0; padding: 0 28px; min-width: 0; }
+  .header-tel__label { display: none; }
+  .header-tel__number { display: block; font-size: 23px; line-height: 1.2; letter-spacing: .08em; }
+  .header-tel__hours { display: block; font-size: 13px; line-height: 1.5; letter-spacing: .06em; }
+}
+
+@media (min-width: 1200px) { .main-nav__wide { display: flex !important; } }
+
+/* ---- 最初の画面：左にスライド（今のサイトと同じ順の13枚）、右に縦書きの一言 ---- */
+.hero { display: grid; background: var(--kiji); }
+.hero__slides { position: relative; overflow: hidden; aspect-ratio: 3 / 2; background: var(--band); touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; }
+.hero__slide img { -webkit-user-drag: none; }
+.hero__slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease; }
+.hero__slide.is-active { opacity: 1; }
+.hero__slide picture, .hero__slide img { display: block; width: 100%; height: 100%; }
+.hero__slide img { object-fit: cover; }
+.hero__slide[data-slide="loaves"] img { object-position: center 40%; }
+.hero__slide--logo { display: grid; place-items: center; background: var(--band); }
+.hero__slide--logo img { width: 52%; height: auto; max-width: 360px; }
+.hero__controls { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 18px; z-index: 2; display: flex; align-items: center; }
+.hero__controls[hidden] { display: none; }
+.hero__progress { flex: 1; height: 1px; background: rgba(247, 243, 236, .45); }
+.hero__progress span { display: block; width: 0; height: 100%; background: var(--kiji); transition: width .6s ease; }
+.hero__panel {
+  display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto 1fr auto; column-gap: 24px;
+  padding: 24px var(--gutter) 40px;
+}
+/* 地に、ロゴを大きく薄く透かす（今のサイトの最初の画面と同じ。文字の読みやすさは変えない濃さ） */
+.hero__panel { position: relative; overflow: hidden; }
+.hero__panel::before { content: ""; position: absolute; z-index: 0; right: -90px; top: 110px; width: 420px; height: 420px;
+  background: url(assets/logo-alpha.webp) center / contain no-repeat; opacity: .06; pointer-events: none; }
+.hero__panel > * { position: relative; z-index: 1; }
+.hero__mark { grid-column: 1; grid-row: 1; display: grid; gap: 14px; justify-items: start; }
+.hero__mark img { width: 64px; height: auto; }
+.hero__eyebrow { font-size: 14px; line-height: 1.7; letter-spacing: .24em; color: var(--ink-soft); }
+.hero__title {
+  grid-column: 2; grid-row: 1 / 3; justify-self: end; align-self: start; writing-mode: vertical-rl;
+  font-size: clamp(23px, 6.2vw, 28px); font-weight: 500; line-height: 1.75; letter-spacing: .2em;
+}
+.hero__title span { display: block; }
+.hero__title span + span { margin-right: .35em; }
+.hero__lead { grid-column: 1; grid-row: 2; align-self: end; margin-top: 24px; font-size: 16px; line-height: 2.1; }
+.hero__foot { grid-column: 1 / -1; grid-row: 3; margin-top: 28px; }
+.hero__hours { border-top: 1px solid var(--ink); }
+.hero__hours > div { display: grid; grid-template-columns: 5.5em 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); line-height: 1.8; }
+.hero__hours dt { color: var(--ink-soft); }
+.hero__button { display: none; }
+@media (min-width: 900px) {
+  /* 最初の画面は画面の高さ（上の帯と線の分を引く）。右の文が長い時だけ伸びる */
+  .hero { grid-template-columns: minmax(0, 1.4fr) minmax(400px, 1fr); min-height: clamp(600px, calc(100svh - var(--header-h) - 1px), 820px); }
+  .hero__slides { aspect-ratio: auto; }
+  .hero__slide[data-slide="loaves"] img { object-position: center 70%; }
+  .hero__controls { left: 32px; right: 32px; bottom: 24px; }
+  .hero__panel { padding: 40px clamp(40px, 4.5vw, 72px) 40px; column-gap: 40px; }
+  .hero__mark img { width: 80px; }
+  .hero__panel::before { right: -6%; left: auto; top: 80px; width: 86%; height: auto; aspect-ratio: 1; }
+  .hero__title { font-size: clamp(28px, 2.4vw, 37px); letter-spacing: .22em; }
+  .hero__foot { margin-top: 24px; }
+  .hero__button { display: inline-flex; margin-top: 20px; }
+}
+
+/* ---- 半分ずつの段（文と写真） ---- */
+.split { display: grid; gap: 40px; align-items: center; }
+.split__photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+#jam .split__photo img { aspect-ratio: 16 / 10; object-position: center 85%; }
+@media (min-width: 900px) {
+  .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(48px, 7vw, 112px); }
+  .split--photo-first { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+}
+.about { background: var(--kiji); }
+
+/* ---- 食パン：横長の写真の下に、見出しと文の2列 ---- */
+.shokupan__grid { display: grid; gap: 40px; align-items: center; }
+.shokupan__photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.shokupan__body { display: grid; gap: 8px; }
+.spec { margin-top: 28px; border-top: 1px solid var(--line); }
+.spec > div { display: grid; grid-template-columns: 5.5em 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.spec dt { color: var(--ink-soft); }
+.tbc { display: inline-block; margin-left: 4px; padding: 0 8px; border: 1px solid var(--ink-soft); font-size: 13px; line-height: 1.7; color: var(--ink-soft); letter-spacing: .08em; vertical-align: 2px; }
+@media (min-width: 900px) {
+  .shokupan__grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(48px, 7vw, 112px); }
+}
+
+/* ---- 写真の列 ---- */
+.photo-row { display: grid; gap: 10px; margin-top: 48px; }
+.photo-row img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.photo-row--three { grid-template-columns: repeat(3, 1fr); }
+.photo-row--two { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 900px) { .photo-row { gap: 24px; margin-top: 88px; } }
+
+/* ---- ジャム ---- */
+.jam { background: var(--kiji); }
+.jam-list { border-top: 1px solid var(--line); }
+.jam-list li { display: grid; grid-template-columns: 14px 1fr auto; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+.jam-list__dot { width: 9px; height: 9px; border-radius: 50%; background: var(--dot); }
+.jam-list__name { font-size: 18px; letter-spacing: .12em; }
+.jam-list__name small { font-size: 14px; margin-left: .2em; color: var(--ink-soft); letter-spacing: .08em; }
+.jam-list__en { font-size: 16px; color: var(--ink-soft); }
+.jam__note { margin-top: 24px; padding: 20px 22px; background: var(--white); border-left: 1px solid var(--ink); font-size: 16px; line-height: 2; }
+.jam__note p + p { margin-top: 6px; }
+/* ---- 菓子パン ---- */
+.sweets__head { display: grid; gap: 8px; margin-bottom: 40px; }
+.sweets__head .heading { margin-bottom: 16px; }
+@media (min-width: 900px) { .sweets__head { grid-template-columns: 1fr 1fr; align-items: end; margin-bottom: 56px; } .sweets__head .heading { margin-bottom: 0; } }
+/* 菓子パンの写真4枚（本人が切った写真。2026-11-15）。写真は切らず、縦横の比のまま、行ごとに高さをそろえて並べる。
+   PC：1行目 天板＋粉砂糖＋袋、2行目 店頭の棚。スマホ：天板＋粉砂糖、袋、店頭の棚。
+   縦横の比は枠に持たせ、写真は枠いっぱいに敷く（WebKitで幅を変えた時に高さが古いまま残るのを防ぐ） */
+.mosaic { --gap: 10px; display: flex; flex-wrap: wrap; gap: var(--gap); }
+.mosaic figure { position: relative; overflow: hidden; aspect-ratio: var(--r); }
+.mosaic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mosaic__tray { --r: 867 / 1165; order: 1; width: calc((100% - var(--gap)) * 0.7442 / 1.6480); }
+.mosaic__donut { --r: 827 / 915; order: 2; width: calc((100% - var(--gap)) * 0.9038 / 1.6480); }
+.mosaic__bag { --r: 1391 / 767; order: 3; width: 100%; }
+.mosaic__shelf { --r: 1206 / 405; order: 4; width: 100%; }
+@media (min-width: 900px) {
+  .mosaic { --gap: 24px; }
+  /* 1行目：天板・粉砂糖・袋を同じ高さで。2行目：横長の店頭の棚を横いっぱいに */
+  .mosaic__tray { order: 1; width: calc((100% - 2 * var(--gap)) * 0.7442 / 3.4616); }
+  .mosaic__donut { order: 2; width: calc((100% - 2 * var(--gap)) * 0.9038 / 3.4616); }
+  .mosaic__bag { order: 3; width: calc((100% - 2 * var(--gap)) * 1.8136 / 3.4616); }
+  .mosaic__shelf { order: 4; width: 100%; }
+}
+.menu-list { display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; margin-top: 40px; border-top: 1px solid var(--line); }
+.menu-list li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 16px; letter-spacing: .08em; }
+.menu-list .menu-list__etc { color: var(--ink-soft); font-size: 15px; }
+@media (min-width: 900px) { .menu-list { grid-template-columns: repeat(4, 1fr); column-gap: 32px; margin-top: 56px; } }
+.home-fruit { display: grid; gap: 32px; margin-top: 48px; padding-top: 48px; border-top: 1px solid var(--line); }
+.home-fruit__photos { display: grid; grid-template-columns: 1fr; gap: 10px; }
+/* 縦横の比は枠に持たせ、写真は枠いっぱいに敷く。キウイは本人が切った横長のまま（2026-11-15） */
+.home-fruit__photos figure { position: relative; overflow: hidden; }
+.home-fruit__photos img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.home-fruit__main { aspect-ratio: 4 / 3; }
+.home-fruit__kiwi { aspect-ratio: 1351 / 761; }
+.home-fruit__berry { aspect-ratio: 16 / 9; }
+.home-fruit__berry img { object-position: center 55%; }
+.home-fruit__text h3 { margin-bottom: 20px; font-size: clamp(24px, 2.3vw, 31px); letter-spacing: .14em; }
+@media (min-width: 900px) {
+  /* 文を上に2列で、写真は大きいぶどう1枚（2×2）と小さい4枚（菓子パンの段と同じ幅） */
+  .home-fruit { gap: 48px; margin-top: 80px; padding-top: 80px; }
+  .home-fruit__text { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; align-items: end; }
+  .home-fruit__text .heading__en { grid-column: 1; }
+  .home-fruit__text h3 { grid-column: 1; margin-bottom: 0; }
+  .home-fruit__text .body-copy { grid-column: 2; grid-row: 1 / 3; }
+  /* 左に大きいぶどう、右にキウイとブルーベリー。ぶどうの高さは右の2枚に合わせる */
+  .home-fruit__photos { grid-template-columns: 1.8fr 1fr; gap: 16px; }
+  .home-fruit__main { grid-row: 1 / 3; aspect-ratio: auto; }
+  .home-fruit__berry { aspect-ratio: 4 / 3; }
+}
+
+/* ---- Instagram：投稿が横に流れる（牛輝・Rayと同じ動き） ---- */
+.instagram { background: var(--kiji); }
+.instagram__head { display: grid; gap: 8px; margin-bottom: 40px; }
+.instagram__head .heading { margin-bottom: 0; }
+.instagram__links .more-link { margin-top: 0; }
+.instagram__links .note { margin-top: 6px; }
+@media (min-width: 900px) { .instagram__head { grid-template-columns: 1fr auto; align-items: end; margin-bottom: 56px; } }
+/* 流れる列：横にすべらせられる列を、JS が少しずつ送る（指・トラックパッド・マウスのドラッグでも動かせ、止まらずに流れ続ける。2026-11-15 本人） */
+.marquee { overflow-x: auto; overscroll-behavior-x: contain; scroll-behavior: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; cursor: grab; }
+.marquee::-webkit-scrollbar { display: none; }
+.marquee.is-dragging { cursor: grabbing; }
+.marquee__track { display: flex; width: max-content; gap: 12px; padding-inline: var(--gutter); }
+.marquee__track a { display: block; }
+.marquee__track img { width: clamp(150px, 40vw, 260px); aspect-ratio: 1; object-fit: cover; -webkit-user-drag: none; user-select: none; -webkit-user-select: none; }
+.marquee.is-running .marquee__track { gap: 0; padding-inline: 0; }
+.marquee.is-running .marquee__track > li { padding-right: 12px; }
+/* ジャムの写真の列：縦長の札で、左へゆっくり流す（Instagramは右へ） */
+.jam-marquee { margin-top: 40px; }
+.jam-marquee .marquee__track img { width: clamp(140px, 34vw, 240px); aspect-ratio: 3 / 4; }
+@media (min-width: 900px) { .jam-marquee { margin-top: 72px; } }
+@media (prefers-reduced-motion: reduce) {
+  .marquee.is-running .marquee__track { padding-inline: var(--gutter); }
+  .marquee__track > [aria-hidden="true"] { display: none; }
+  .hero__slide { transition: none; }
+}
+
+/* ---- ご予約：白い札を真ん中に ---- */
+.reserve__box { background: var(--white); max-width: 880px; }
+.reserve__text { display: grid; justify-items: center; padding: 48px var(--gutter) 52px; text-align: center; }
+.reserve__text .heading__en { justify-content: center; }
+.reserve__text .heading__en::before { content: ""; width: 48px; height: 1px; background: currentColor; }
+.reserve__phone { display: inline-block; font-size: clamp(38px, 10vw, 58px); line-height: 1.2; letter-spacing: .06em; text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.reserve__hours { margin-top: 14px; }
+.reserve__notes { margin: 28px auto 36px; display: grid; gap: 10px; width: fit-content; max-width: 34em; text-align: left; }
+.reserve__notes li { position: relative; padding-left: 1.2em; font-size: 16px; line-height: 1.95; }
+.reserve__notes li::before { content: ""; position: absolute; left: 0; top: .95em; width: .6em; height: 1px; background: var(--ink-soft); }
+@media (min-width: 900px) { .reserve__text { padding: 80px 64px; } }
+
+/* ---- 店舗のご案内（カレンダーは置かない。不定休のため） ---- */
+/* 地に、最初の画面と同じくロゴを大きく薄く透かす（2026-11-15 本人）。PCは地図に隠れないよう、店の表の後ろに */
+.info { position: relative; overflow: hidden; }
+.info::before { content: ""; position: absolute; z-index: 0; right: -90px; top: 150px; width: 420px; height: 420px;
+  background: url(assets/logo-alpha.webp) center / contain no-repeat; opacity: .06; pointer-events: none; }
+.info > .container { position: relative; z-index: 1; }
+/* PCは、ロゴの中の小さな字が店の表に重ならないよう、地図の下の空いた所（右下）に */
+@media (min-width: 900px) { .info::before { right: calc(50% - 680px); top: auto; bottom: -70px; width: 560px; height: 560px; } }
+.info__grid { display: grid; gap: 48px; }
+@media (min-width: 900px) { .info__grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(56px, 7vw, 112px); align-items: start; } }
+.info__closed { margin-top: 32px; padding: 28px 28px 30px; background: var(--kiji); border-top: 1px solid var(--ink); }
+.info__map { position: relative; aspect-ratio: 4 / 3; background: var(--band); }
+.info__map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: grayscale(.35) sepia(.12); }
+.info__side .info__links { margin-top: 24px; }
+.info__closed-title { margin-bottom: 10px; font-size: 18px; font-weight: 500; letter-spacing: .14em; }
+.info__closed p + p { margin-top: 8px; }
+.shop-table { border-top: 1px solid var(--line); }
+.shop-table > div { display: grid; grid-template-columns: 6em 1fr; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.shop-table dt { color: var(--ink-soft); }
+.shop-table__reading { display: block; }
+.shop-table__tel { display: inline-flex; align-items: center; min-height: 44px; font-size: 21px; line-height: 1.2; text-decoration: none; }
+.shop-table > div:has(.shop-table__tel) { padding-block: 6px; align-items: center; }
+.info__links { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 32px; margin-top: 32px; }
+.info__links .more-link { margin-top: 0; }
+.info__links .note { flex-basis: 100%; }
+
+/* ---- フッター ---- */
+.site-footer { background: var(--ink); color: var(--kiji); padding: 72px 0 32px; }
+.site-footer__inner { display: grid; gap: 40px; }
+.site-footer__brand img { width: 64px; height: auto; filter: invert(1) brightness(1.4); margin-bottom: 16px; }
+.site-footer__brand p { letter-spacing: .12em; }
+.site-footer__since { font-size: 14px; letter-spacing: .24em; }
+.site-footer__info { display: grid; gap: 10px; font-size: 16px; }
+.site-footer__phone { display: inline-flex; align-items: center; min-height: 48px; font-size: 30px; line-height: 1.2; text-decoration: none; }
+.site-footer__nav { display: grid; grid-template-columns: repeat(3, 1fr); }
+.site-footer__nav a { display: flex; align-items: center; min-height: 44px; font-size: 16px; text-decoration: none; }
+.site-footer .note { color: var(--kiji); }
+.site-footer__copyright { width: min(1120px, calc(100% - var(--gutter) * 2)); margin: 48px auto 0; padding-top: 24px; border-top: 1px solid rgba(247, 243, 236, .3); font-size: 13px; letter-spacing: .14em; }
+@media (min-width: 900px) {
+  .site-footer { padding-top: 96px; }
+  .site-footer__inner { grid-template-columns: 1fr 1.2fr 1fr; align-items: start; }
+  .site-footer__nav { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---- スマホの下の帯 ---- */
+.mobile-actions { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: grid; grid-template-columns: 1.4fr 1fr; border-top: 1px solid var(--ink); }
+.mobile-actions a { display: flex; align-items: center; justify-content: center; min-height: 56px; font-size: 16px; letter-spacing: .12em; text-decoration: none; }
+.mobile-actions a:first-child { background: var(--ink); color: var(--kiji); }
+.mobile-actions a:last-child { background: var(--kiji); color: var(--ink); }
+@media (min-width: 900px) { .mobile-actions { display: none; } }
