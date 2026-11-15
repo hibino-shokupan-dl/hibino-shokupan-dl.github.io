@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!sessionStorage.getItem('andand-intro')){document.documentElement.classList.add('has-intro');sessionStorage.setItem('andand-intro','1')}}catch(e){}</script>
+  <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(/[?&]intro\b/.test(location.search)||!sessionStorage.getItem('andand-intro'))){document.documentElement.classList.add('has-intro');sessionStorage.setItem('andand-intro','1');new Image().src='assets/intro-pans.webp';}}catch(e){}</script>
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#F7F3EC">
   <meta name="description" content="三股町の、テイクアウトだけの小さな食パン屋です。無添加の食パンと、季節の果実の自家製ジャム。木・金・土・日 11:00〜15:00（売り切れ次第終了）。ご予約はお電話で。">
@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&amp;family=Shippori+Mincho:wght@400;500;600&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261115p">
-  <script src="script.js?v=20261115p" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261115q">
+  <script src="script.js?v=20261115q" defer></script>
 </head>
 <body>
   <!-- 始まりの演出：「&.&」をペンで書く（文字の形は Cormorant Garamond。2026-11-15 本人） -->
