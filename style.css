@@ -52,7 +52,16 @@ ul { padding: 0; list-style: none; }
   display: grid; place-items: center; position: fixed; inset: 0; z-index: 200; background: var(--kiji); cursor: pointer;
   animation: intro-out .7s ease 2.7s forwards;
 }
-.intro__mark { width: min(62vw, 380px); height: auto; overflow: visible; }
+.intro__art { position: relative; display: grid; place-items: center; }
+/* 「&.&」を書いている間に、後ろからロゴの食パンの型の絵がうっすら浮かび上がり、書き終える頃にはある程度見えている */
+.intro__pans {
+  position: absolute; left: 50%; top: 50%; width: min(78vw, 470px); aspect-ratio: 476 / 519;
+  background: url(assets/intro-pans.webp) center / contain no-repeat;
+  opacity: 0; transform: translate(-50%, -50%) scale(1.06); filter: blur(3px);
+  animation: intro-pans 2.2s cubic-bezier(.45, 0, .4, 1) .15s forwards; pointer-events: none;
+}
+@keyframes intro-pans { to { opacity: .17; transform: translate(-50%, -50%) scale(1); filter: blur(0); } }
+.intro__mark { position: relative; z-index: 1; width: min(62vw, 380px); height: auto; overflow: visible; }
 .intro__glyph {
   fill: var(--ink); fill-opacity: 0; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round;
   stroke-dasharray: var(--len, 6000); stroke-dashoffset: var(--len, 6000);
