@@ -1,3 +1,5 @@
-# 方針(2026-11-15): 本番にするまでは検索に出さない（index.html に noindex）。
+# &.&～日々の食パン～ 公式ホームページ（2026-11-15 から本番）
 User-agent: *
 Allow: /
+
+Sitemap: https://hibino-shokupan-dl.github.io/sitemap.xml
